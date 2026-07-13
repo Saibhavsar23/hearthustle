@@ -16,7 +16,8 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Alpine.js -->
+    <!-- Alpine.js (and its collapse plugin for smooth mobile nav transitions) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Custom Tailwind Configuration -->
@@ -78,14 +79,15 @@
 <body 
     x-data="{ 
         contactSuccess: false,
-        faqActive: null
+        faqActive: null,
+        mobileMenuOpen: false
     }" 
     class="bg-sand-50 text-sand-800 font-sans antialiased selection:bg-vermilion selection:text-white"
 >
 
     <!-- Navigation Header -->
     <header class="sticky top-0 z-50 bg-sand-100/95 backdrop-blur-md border-b border-sand-200">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Brand Identity -->
             <a href="#" class="flex items-center space-x-3 group">
                 <span class="w-10 h-10 rounded-lg bg-forest-800 flex items-center justify-center text-white font-display font-bold text-lg tracking-tight group-hover:bg-vermilion transition-colors duration-300">
@@ -99,8 +101,8 @@
                 </div>
             </a>
 
-            <!-- Editorial Nav Links -->
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide uppercase">
+            <!-- Desktop Editorial Nav Links -->
+            <nav class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm font-semibold tracking-wide uppercase">
                 <a href="#about" class="text-sand-800/70 hover:text-forest-800 transition-colors">Overview</a>
                 <a href="#schedule" class="text-sand-800/70 hover:text-forest-800 transition-colors">Schedule</a>
                 <a href="#portal" class="text-sand-800/70 hover:text-forest-800 transition-colors">Register</a>
@@ -108,18 +110,56 @@
                 <a href="#contact" class="text-sand-800/70 hover:text-forest-800 transition-colors">Contact</a>
             </nav>
 
-            <!-- Dynamic CTA (Register Child is the dominant filled button) -->
-            <div class="flex items-center space-x-4">
+            <!-- Desktop CTA buttons -->
+            <div class="hidden sm:flex items-center space-x-3 lg:space-x-4">
                 <a 
                     href="#portal" 
-                    class="inline-flex items-center justify-center px-6 py-3 bg-vermilion hover:bg-vermilion-600 text-white text-sm font-semibold uppercase tracking-wider rounded-lg transition-all shadow-md shadow-vermilion/10 hover:shadow-lg hover:shadow-vermilion/20"
+                    class="inline-flex items-center justify-center px-4 py-2.5 lg:px-6 lg:py-3 bg-vermilion hover:bg-vermilion-600 text-white text-xs lg:text-sm font-semibold uppercase tracking-wider rounded-lg transition-all shadow-md shadow-vermilion/10 hover:shadow-lg hover:shadow-vermilion/20"
                 >
                     Register Child
                 </a>
                 <a 
                     href="#portal" 
-                    class="relative hidden sm:inline-flex items-center justify-center px-6 py-3 border border-forest-800 text-sm font-semibold uppercase tracking-wider rounded-lg text-forest-800 hover:text-white hover:bg-forest-800 transition-all duration-300 overflow-hidden"
+                    class="relative inline-flex items-center justify-center px-4 py-2.5 lg:px-6 lg:py-3 border border-forest-800 text-xs lg:text-sm font-semibold uppercase tracking-wider rounded-lg text-forest-800 hover:text-white hover:bg-forest-800 transition-all duration-300 overflow-hidden"
                 >
+                    Volunteer Info
+                </a>
+            </div>
+
+            <!-- Mobile Navigation Toggle Button -->
+            <button 
+                @click="mobileMenuOpen = !mobileMenuOpen" 
+                class="md:hidden p-2 text-forest-800 hover:text-vermilion transition-colors focus:outline-none"
+                aria-label="Toggle mobile menu"
+            >
+                <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Navigation Menu -->
+        <div 
+            x-show="mobileMenuOpen" 
+            x-collapse
+            class="md:hidden bg-sand-100 border-b border-sand-200 px-6 py-4 space-y-4 shadow-inner"
+            style="display: none;"
+        >
+            <nav class="flex flex-col space-y-3 text-sm font-semibold tracking-wide uppercase">
+                <a @click="mobileMenuOpen = false" href="#about" class="text-sand-800/70 hover:text-forest-800 transition-colors py-2 border-b border-sand-200/50">Overview</a>
+                <a @click="mobileMenuOpen = false" href="#schedule" class="text-sand-800/70 hover:text-forest-800 transition-colors py-2 border-b border-sand-200/50">Schedule</a>
+                <a @click="mobileMenuOpen = false" href="#portal" class="text-sand-800/70 hover:text-forest-800 transition-colors py-2 border-b border-sand-200/50">Register</a>
+                <a @click="mobileMenuOpen = false" href="#faq" class="text-sand-800/70 hover:text-forest-800 transition-colors py-2 border-b border-sand-200/50">FAQs</a>
+                <a @click="mobileMenuOpen = false" href="#contact" class="text-sand-800/70 hover:text-forest-800 transition-colors py-2">Contact</a>
+            </nav>
+            <div class="flex flex-col gap-3 pt-3 border-t border-sand-200/80">
+                <a @click="mobileMenuOpen = false" href="#portal" class="w-full text-center py-3 bg-vermilion text-white text-sm font-semibold uppercase tracking-wider rounded-lg shadow-md shadow-vermilion/10">
+                    Register Child
+                </a>
+                <a @click="mobileMenuOpen = false" href="#portal" class="w-full text-center py-3 border border-forest-800 text-sm font-semibold uppercase tracking-wider rounded-lg text-forest-800">
                     Volunteer Info
                 </a>
             </div>
@@ -127,7 +167,7 @@
     </header>
 
     <!-- Hero / Intro Poster Section -->
-    <section class="relative bg-sand-100 overflow-hidden py-16 lg:py-24 border-b border-sand-200">
+    <section class="relative bg-sand-100 overflow-hidden py-12 sm:py-16 lg:py-24 border-b border-sand-200">
         <!-- Abstract Sport Grid Graphic Behind Background -->
         <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply">
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -143,36 +183,36 @@
         <!-- Big Sport Stripe Accent -->
         <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-vermilion/5 to-transparent skew-x-12 transform origin-top-right"></div>
 
-        <div class="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
             <!-- Left Side: Editorial Headers -->
-            <div class="lg:col-span-7 space-y-8">
+            <div class="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
                 <!-- Athletics Badge -->
-                <div class="inline-flex items-center space-x-2 bg-forest-800 text-white rounded-full pl-2 pr-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
+                <div class="inline-flex items-center space-x-2 bg-forest-800 text-white rounded-full pl-2 pr-4 py-1.5 text-xs font-semibold uppercase tracking-widest mx-auto lg:mx-0">
                     <span class="w-2 h-2 rounded-full bg-vermilion animate-pulse-slow"></span>
                     <span>Supporting the American Heart Association</span>
                 </div>
 
-                <h1 class="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-none text-forest-800 tracking-tight">
+                <h1 class="font-display font-bold text-4xl sm:text-6xl lg:text-7xl leading-none text-forest-800 tracking-tight">
                     THE PACESETTERS OF <br class="hidden sm:inline" />
                     <span class="text-vermilion">GREEN BROOK.</span>
                 </h1>
 
-                <p class="text-lg lg:text-xl text-sand-800/80 max-w-2xl font-light leading-relaxed">
+                <p class="text-base sm:text-lg lg:text-xl text-sand-800/80 max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
                     A high-impact, 6-week youth running series hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at Arthur Lewis Park. Merging physical fitness and athletic development into an accessible series for neighborhood children aged <strong class="font-semibold text-forest-800">3–11</strong>. All proceeds are directly donated to the <strong class="font-semibold text-vermilion">American Heart Association</strong>.
                 </p>
 
                 <!-- Primary CTAs (Registration is highly dominant) -->
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 pt-2">
                     <a 
                         href="#portal" 
-                        class="px-8 py-4 bg-vermilion hover:bg-vermilion-600 text-white font-semibold text-base uppercase tracking-wider rounded-xl shadow-lg shadow-vermilion/10 hover:shadow-xl hover:shadow-vermilion/20 transition-all duration-300 text-center"
+                        class="px-6 py-4 bg-vermilion hover:bg-vermilion-600 text-white font-semibold text-base uppercase tracking-wider rounded-xl shadow-lg shadow-vermilion/10 hover:shadow-xl hover:shadow-vermilion/20 transition-all duration-300 text-center"
                     >
                         Register a Participant ($30)
                     </a>
                     <a 
                         href="#portal" 
-                        class="px-8 py-4 bg-white hover:bg-sand-100 border-2 border-forest-800/20 hover:border-forest-800/60 text-forest-800 font-semibold text-base uppercase tracking-wider rounded-xl transition-all duration-300 text-center"
+                        class="px-6 py-4 bg-white hover:bg-sand-100 border-2 border-forest-800/20 hover:border-forest-800/60 text-forest-800 font-semibold text-base uppercase tracking-wider rounded-xl transition-all duration-300 text-center"
                     >
                         Become a Volunteer
                     </a>
@@ -180,9 +220,9 @@
             </div>
 
             <!-- Right Side: Big Sport Editorial Graphic / Info Slate -->
-            <div class="lg:col-span-5 relative">
+            <div class="lg:col-span-5 relative w-full max-w-md mx-auto lg:max-w-none">
                 <!-- Graphic Frame -->
-                <div class="relative bg-white border border-sand-200 rounded-3xl p-8 shadow-xl shadow-sand-800/5 overflow-hidden">
+                <div class="relative bg-white border border-sand-200 rounded-3xl p-6 sm:p-8 shadow-xl shadow-sand-800/5 overflow-hidden">
                     <!-- Subtle Sport Texture -->
                     <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-vermilion/5 pointer-events-none"></div>
 
@@ -235,24 +275,24 @@
     </section>
 
     <!-- Overview / Goals Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="about" class="py-16 sm:py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Section Header -->
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Building Active Habits Together</p>
-                <h2 class="font-display font-bold text-4xl sm:text-5xl text-forest-800">OUR PILLARS OF DEVELOPMENT</h2>
+                <h2 class="font-display font-bold text-3xl sm:text-5xl text-forest-800">OUR PILLARS OF DEVELOPMENT</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
-                <p class="text-sand-800/75 font-light leading-relaxed">
+                <p class="text-base text-sand-800/75 font-light leading-relaxed">
                     The Heart Hustle merges athletic skill improvement with community support. We welcome children of all physical backgrounds to learn athletic focus while supporting heart research.
                 </p>
             </div>
 
-            <!-- Feature Block - Custom Asymmetrical Layout -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature Block - Stacking on Mobile, Responsive Grid on Desktop -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
                 
                 <!-- Pillar 1 -->
-                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 bg-forest-800 text-white rounded-xl flex items-center justify-center font-display font-bold text-lg">
                             01
@@ -270,7 +310,7 @@
                 </div>
 
                 <!-- Pillar 2 -->
-                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 bg-vermilion text-white rounded-xl flex items-center justify-center font-display font-bold text-lg animate-pulse-slow">
                             02
@@ -288,7 +328,7 @@
                 </div>
 
                 <!-- Pillar 3 -->
-                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="w-12 h-12 bg-sand-200 text-sand-800 rounded-xl flex items-center justify-center font-display font-bold text-lg">
                             03
@@ -311,21 +351,21 @@
     </section>
 
     <!-- Schedule Section -->
-    <section id="schedule" class="py-20 bg-sand-100 border-t border-b border-sand-200">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="schedule" class="py-16 sm:py-20 bg-sand-100 border-t border-b border-sand-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
                 
                 <!-- Left Hand Side: Copy Block & Route Map Concept -->
                 <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
                     <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run Architecture</p>
-                    <h2 class="font-display font-bold text-4xl text-forest-800 leading-tight">6 SESSIONS.<br class="hidden lg:inline" />ONE COMMUNITY.</h2>
+                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800 leading-tight">6 SESSIONS.<br class="hidden lg:inline" />ONE COMMUNITY.</h2>
                     <p class="text-sm text-sand-800/70 font-light leading-relaxed">
                         All programs operate on Sundays to keep scheduling stress-free. Every participant receives active instruction, track guides, and personal tracking charts.
                     </p>
 
                     <!-- Route Highlight Card -->
-                    <div class="bg-white border border-sand-200 p-6 rounded-2xl space-y-4 shadow-md shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 p-5 sm:p-6 rounded-2xl space-y-4 shadow-md shadow-sand-800/5">
                         <div class="flex items-center space-x-3">
                             <span class="text-2xl">🌳</span>
                             <div>
@@ -348,88 +388,88 @@
                 </div>
 
                 <!-- Right Hand Side: Weekly Run Log -->
-                <div class="lg:col-span-8 space-y-6">
+                <div class="lg:col-span-8 space-y-4 sm:space-y-6">
                     
                     <!-- Session 1 Card -->
-                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-sm shadow-sand-800/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-vermilion text-white font-display font-bold flex items-center justify-center text-lg shadow-md shadow-vermilion/10">01</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-vermilion">Run Meet Series Intro</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 6th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, September 6th</h4>
                             </div>
                         </div>
-                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70 self-start md:self-auto">
                             ⏱️ 10:30 AM Launch
                         </div>
                     </div>
 
                     <!-- Session 2 Card -->
-                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-sm shadow-sand-800/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">02</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 13th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, September 13th</h4>
                             </div>
                         </div>
-                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70 self-start md:self-auto">
                             ⏱️ 10:30 AM Launch
                         </div>
                     </div>
 
                     <!-- Session 3 Card -->
-                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-sm shadow-sand-800/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">03</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 20th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, September 20th</h4>
                             </div>
                         </div>
-                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70 self-start md:self-auto">
                             ⏱️ 10:30 AM Launch
                         </div>
                     </div>
 
                     <!-- Session 4 Card -->
-                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-sm shadow-sand-800/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">04</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 27th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, September 27th</h4>
                             </div>
                         </div>
-                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70 self-start md:self-auto">
                             ⏱️ 10:30 AM Launch
                         </div>
                     </div>
 
                     <!-- Session 5 Card -->
-                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-sm shadow-sand-800/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">05</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, October 4th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, October 4th</h4>
                             </div>
                         </div>
-                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70 self-start md:self-auto">
                             ⏱️ 10:30 AM Launch
                         </div>
                     </div>
 
                     <!-- Session 6 Card (Re-branded as a Community Celebration Run) -->
-                    <div class="bg-white border border-vermilion hover:border-vermilion-600 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-md shadow-vermilion/5">
+                    <div class="bg-white border border-vermilion hover:border-vermilion-600 p-5 sm:p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-6 shadow-md shadow-vermilion/5">
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-vermilion text-white font-display font-bold flex items-center justify-center text-lg shadow-md shadow-vermilion/10 animate-float-slow">🏆</span>
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-wide text-vermilion">COMMUNITY CELEBRATION RUN</p>
-                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, October 11th</h4>
+                                <h4 class="font-display font-bold text-lg sm:text-xl text-forest-800">Sunday, October 11th</h4>
                             </div>
                         </div>
-                        <div class="bg-vermilion text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+                        <div class="bg-vermilion text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider self-start md:self-auto">
                             🎖️ Medals & Honor
                         </div>
                     </div>
@@ -442,24 +482,24 @@
     </section>
 
     <!-- Interactive Dual Portal (Registration & Volunteer Link Cards) -->
-    <section id="portal" class="py-24 bg-white relative overflow-hidden">
+    <section id="portal" class="py-16 sm:py-24 bg-white relative overflow-hidden">
         
-        <div class="max-w-6xl mx-auto px-6 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
             <!-- Headline Call block -->
-            <div class="text-center max-w-2xl mx-auto mb-16">
+            <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Join The Community Mission</p>
-                <h2 class="font-display font-bold text-4xl text-forest-800 mt-2">INTAKE PORTAL</h2>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800 mt-2">INTAKE PORTAL</h2>
                 <p class="text-sm text-sand-800/70 mt-3 font-light">
                     Register your runner or sign up to support as a Leo Club volunteer below. Select the appropriate link to fill out our official program forms.
                 </p>
             </div>
 
             <!-- Double Card Grid (Replacing Forms with Direct Google Form Link Buttons) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
                 
                 <!-- 1. KID REGISTRATION INFO CARD -->
-                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
+                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-6 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
                     <div class="absolute -left-16 -top-16 w-32 h-32 rounded-full bg-forest-800/5 pointer-events-none"></div>
                     
                     <div class="space-y-6 mb-8 relative z-10">
@@ -504,7 +544,7 @@
                 </div>
 
                 <!-- 2. VOLUNTEER REGISTRATION INFO CARD -->
-                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
+                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-6 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
                     <div class="absolute -right-16 -bottom-16 w-32 h-32 rounded-full bg-vermilion/5 pointer-events-none"></div>
 
                     <div class="space-y-6 mb-8 relative z-10">
@@ -554,13 +594,13 @@
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-20 bg-sand-100 border-t border-b border-sand-200">
-        <div class="max-w-4xl mx-auto px-6">
+    <section id="faq" class="py-16 sm:py-20 bg-sand-100 border-t border-b border-sand-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Section Header -->
-            <div class="text-center mb-16 space-y-4">
+            <div class="text-center mb-12 sm:mb-16 space-y-4">
                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run details</p>
-                <h2 class="font-display font-bold text-4xl text-forest-800">Frequently Asked Questions</h2>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800">Frequently Asked Questions</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
             </div>
 
@@ -571,11 +611,11 @@
                 <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
                     <button 
                         @click="faqActive === 1 ? faqActive = null : faqActive = 1"
-                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                        class="w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">What are the age limits for participants?</span>
+                        <span class="font-display font-bold text-forest-800 text-base sm:text-lg pr-4">What are the age limits for participants?</span>
                         <span 
-                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300 flex-shrink-0"
                             :class="faqActive === 1 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
                         >
                             ↓
@@ -586,7 +626,7 @@
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 max-h-0"
                         x-transition:enter-end="opacity-100 max-h-screen"
-                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                        class="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
                         Our program is specifically designed for children aged <strong>3 to 11</strong>. Runners will be split into age-appropriate pacing groups during weekly meets.
                     </div>
@@ -596,11 +636,11 @@
                 <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
                     <button 
                         @click="faqActive === 2 ? faqActive = null : faqActive = 2"
-                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                        class="w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">What should runners wear and bring?</span>
+                        <span class="font-display font-bold text-forest-800 text-base sm:text-lg pr-4">What should runners wear and bring?</span>
                         <span 
-                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300 flex-shrink-0"
                             :class="faqActive === 2 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
                         >
                             ↓
@@ -611,7 +651,7 @@
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 max-h-0"
                         x-transition:enter-end="opacity-100 max-h-screen"
-                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                        class="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
                         Please ensure your young runner arrives in comfortable athletic clothing and sneakers. We strongly recommend bringing a water bottle labeled with your child's name for hydration between laps.
                     </div>
@@ -621,11 +661,11 @@
                 <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
                     <button 
                         @click="faqActive === 3 ? faqActive = null : faqActive = 3"
-                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                        class="w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">What is the entry cost and where does it go?</span>
+                        <span class="font-display font-bold text-forest-800 text-base sm:text-lg pr-4">What is the entry cost and where does it go?</span>
                         <span 
-                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300 flex-shrink-0"
                             :class="faqActive === 3 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
                         >
                             ↓
@@ -636,7 +676,7 @@
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 max-h-0"
                         x-transition:enter-end="opacity-100 max-h-screen"
-                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                        class="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
                         Registration is <strong>$30 per participant</strong>. Every dollar of profit from this program goes directly to the <strong>American Heart Association</strong> to support cardiovascular health research and local public health education.
                     </div>
@@ -646,11 +686,11 @@
                 <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
                     <button 
                         @click="faqActive === 4 ? faqActive = null : faqActive = 4"
-                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                        class="w-full px-5 sm:px-6 py-4 sm:py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">What happens during bad weather days?</span>
+                        <span class="font-display font-bold text-forest-800 text-base sm:text-lg pr-4">What happens during bad weather days?</span>
                         <span 
-                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300 flex-shrink-0"
                             :class="faqActive === 4 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
                         >
                             ↓
@@ -661,7 +701,7 @@
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 max-h-0"
                         x-transition:enter-end="opacity-100 max-h-screen"
-                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                        class="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
                         In the event of heavy rain or inclement weather, we will send out an email notification directly to all registered parents at least 2 hours prior to start time. Weather make-ups will automatically roll to scheduled slots during the following Sunday.
                     </div>
@@ -673,17 +713,17 @@
     </section>
 
     <!-- Contact / Inquiries Section -->
-    <section id="contact" class="py-20 bg-white relative">
-        <div class="max-w-4xl mx-auto px-6">
+    <section id="contact" class="py-16 sm:py-20 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div class="text-center max-w-2xl mx-auto mb-12">
+            <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion font-semibold">Still have questions?</p>
                 <h2 class="font-display font-bold text-3xl text-forest-800 mt-2">Get in Touch with our team</h2>
-                <p class="text-xs text-sand-800/50 mt-1">Sai Bhavsar (Vice President) or Kayla Boyer (President) will get back to you within 24 hours.</p>
+                <p class="text-xs text-sand-800/50 mt-2 leading-relaxed">Sai Bhavsar (Vice President) or Kayla Boyer (President) will get back to you within 24 hours.</p>
             </div>
 
             <!-- Modern Form Box -->
-            <div class="bg-sand-50 border border-sand-200 rounded-3xl p-8 sm:p-12 shadow-lg shadow-sand-800/5">
+            <div class="bg-sand-50 border border-sand-200 rounded-3xl p-6 sm:p-12 shadow-lg shadow-sand-800/5">
                 
                 <!-- SUCCESS TOAST -->
                 <div x-show="contactSuccess" class="bg-forest-50 border border-forest-800/20 text-forest-800 rounded-2xl p-6 text-center space-y-3">
@@ -725,7 +765,7 @@
 
     <!-- Footer Section -->
     <footer class="bg-forest-800 text-white border-t-4 border-vermilion">
-        <div class="max-w-7xl mx-auto px-6 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-white/10 pb-8 mb-8">
                 
@@ -742,7 +782,7 @@
 
                 <!-- Middle Column: Quick links -->
                 <div class="md:col-span-3 space-y-3">
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion">Links</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion font-semibold">Links</h4>
                     <ul class="text-xs space-y-2 text-white/80">
                         <li><a href="#about" class="hover:text-vermilion transition-colors">About Series</a></li>
                         <li><a href="#schedule" class="hover:text-vermilion transition-colors">Program Schedule</a></li>
@@ -753,7 +793,7 @@
 
                 <!-- Right Column: Coordinates -->
                 <div class="md:col-span-4 space-y-3 text-xs text-white/80">
-                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion">Details</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion font-semibold">Details</h4>
                     <p>📍 Location: Arthur Lewis Park, Green Brook NJ</p>
                     <p>🕒 Running: Sundays at 10:30 AM</p>
                     <p>📧 Email: <a href="mailto:saibhavsar17@gmail.com" class="underline hover:text-vermilion">saibhavsar17@gmail.com</a></p>
@@ -763,7 +803,7 @@
             </div>
 
             <!-- Lower Copywrite Section (No Terms / Privacy Policy) -->
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50 text-center sm:text-left">
                 <p>&copy; 2026 Green Brook Leo Club. All rights reserved.</p>
             </div>
 
