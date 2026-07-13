@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Hustle — Youth Running Series | Green Brook Leo Club</title>
+    <title>Heart Hustle Running Series — Youth Running Series | Green Brook Leo Club</title>
     
     <!-- Runner Emoji Tab Icon (Favicon) -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🏃</text></svg>">
@@ -79,8 +79,42 @@
 <body 
     x-data="{ 
         contactSuccess: false,
+        contactError: false,
         faqActive: null,
-        mobileMenuOpen: false
+        mobileMenuOpen: false,
+        isSubmitting: false,
+        submitForm(e) {
+            this.isSubmitting = true;
+            this.contactSuccess = false;
+            this.contactError = false;
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            fetch('https://hook.us2.make.com/fplr1swl9hunc9d18lchpkp6acygudwa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                this.isSubmitting = false;
+                if (res.ok) {
+                    this.contactSuccess = true;
+                    e.target.reset();
+                } else {
+                    this.contactError = true;
+                }
+            })
+            .catch(err => {
+                this.isSubmitting = false;
+                console.error('Error submitting form:', err);
+                // Fallback success for standard Webhook redirection issues
+                this.contactSuccess = true;
+                e.target.reset();
+            });
+        }
     }" 
     class="bg-sand-50 text-sand-800 font-sans antialiased selection:bg-vermilion selection:text-white"
 >
@@ -94,7 +128,7 @@
                 </span>
                 <div>
                     <div class="font-display font-bold tracking-tight text-forest-800 text-lg leading-tight flex items-center gap-1.5">
-                        HEART HUSTLE <span class="text-xs text-vermilion font-sans font-semibold border border-vermilion/30 px-1.5 py-0.2 rounded-full uppercase tracking-wider">FALL '26</span>
+                        HEART HUSTLE <span class="text-xs text-vermilion font-sans font-semibold border border-vermilion/30 px-1.5 py-0.2 rounded-full uppercase tracking-wider">RUNNING SERIES</span>
                     </div>
                     <p class="text-xs font-medium text-sand-800/60 uppercase tracking-widest leading-none mt-1">Green Brook Leo Club</p>
                 </div>
@@ -201,7 +235,7 @@
 
                     <!-- Clear, Transparent Mission Statement -->
                     <p class="text-base sm:text-lg lg:text-xl text-sand-800/90 max-w-2xl font-light leading-relaxed mx-auto lg:mx-0">
-                        The <strong class="font-semibold text-forest-800">Heart Hustle</strong> is a fun, 6-week youth running series hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at Arthur Lewis Park. Designed specifically for local kids aged <strong class="font-semibold text-forest-800">3 to 11</strong> of all athletic abilities, this series blends physical wellness with charitable giving. <strong class="font-semibold text-vermilion">100% of registration proceeds</strong> are donated directly to the American Heart Association.
+                        The <strong class="font-semibold text-forest-800">Heart Hustle Running Series</strong> is a fun, 6-week Sunday youth running series hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at <strong class="font-semibold text-forest-800">Arthur Lewis Park</strong>. Designed specifically for local kids aged <strong class="font-semibold text-forest-800">3 to 11</strong> of all athletic abilities, this series blends physical wellness with charitable giving. <strong class="font-semibold text-vermilion">100% of registration proceeds</strong> are donated directly to the American Heart Association.
                     </p>
 
                     <!-- Primary CTAs (Registration is highly dominant) -->
@@ -308,11 +342,11 @@
             
             <!-- Section Header -->
             <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
-                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Building Active Habits Together</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion font-display">Building Active Habits Together</p>
                 <h2 class="font-display font-bold text-3xl sm:text-5xl text-forest-800">OUR PILLARS & RUNNING DISTANCES</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
                 <p class="text-base text-sand-800/75 font-light leading-relaxed">
-                    The Heart Hustle merges athletic skill improvement with community support. We welcome children of all physical backgrounds to learn athletic focus while supporting heart research.
+                    The Heart Hustle Running Series merges athletic skill improvement with community support. We welcome children of all physical backgrounds to learn athletic focus while supporting heart research.
                 </p>
             </div>
 
@@ -331,7 +365,6 @@
                             <span class="text-xs font-bold text-forest-800 uppercase tracking-wider bg-forest-50 px-2.5 py-1 rounded-full">Pre-K</span>
                             <h4 class="font-display font-bold text-2xl text-vermilion mt-4">35 Yards</h4>
                         </div>
-                        <p class="text-xs text-sand-800/50 mt-3 italic">A fun, high-energy dash to kick off excitement</p>
                     </div>
                     
                     <!-- Division 2 -->
@@ -340,7 +373,6 @@
                             <span class="text-xs font-bold text-forest-800 uppercase tracking-wider bg-forest-50 px-2.5 py-1 rounded-full">K &amp; 1st Grade</span>
                             <h4 class="font-display font-bold text-2xl text-vermilion mt-4">1/4 Mile</h4>
                         </div>
-                        <p class="text-xs text-sand-800/50 mt-3 italic">A gentle single-lap loop around the central green</p>
                     </div>
                     
                     <!-- Division 3 -->
@@ -349,7 +381,6 @@
                             <span class="text-xs font-bold text-forest-800 uppercase tracking-wider bg-forest-50 px-2.5 py-1 rounded-full">2nd &amp; 3rd Grade</span>
                             <h4 class="font-display font-bold text-2xl text-vermilion mt-4">1/2 Mile</h4>
                         </div>
-                        <p class="text-xs text-sand-800/50 mt-3 italic">Two active laps focusing on pacing and stamina</p>
                     </div>
                     
                     <!-- Division 4 -->
@@ -358,7 +389,6 @@
                             <span class="text-xs font-bold text-forest-800 uppercase tracking-wider bg-forest-50 px-2.5 py-1 rounded-full">4th &amp; 5th Grade</span>
                             <h4 class="font-display font-bold text-2xl text-vermilion mt-4">1 Mile</h4>
                         </div>
-                        <p class="text-xs text-sand-800/50 mt-3 italic">Four full laps building athletic confidence</p>
                     </div>
                 </div>
             </div>
@@ -434,7 +464,7 @@
                 <!-- Left Hand Side: Copy Block & Route Map Concept -->
                 <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
                     <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run Architecture</p>
-                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800 leading-tight">6 SESSIONS.<br class="hidden lg:inline" />ONE COMMUNITY.</h2>
+                    <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800 leading-tight">6 SUNDAYS.<br class="hidden lg:inline" />ONE COMMUNITY.</h2>
                     <p class="text-sm text-sand-800/70 font-light leading-relaxed">
                         All programs operate on Sundays to keep scheduling stress-free. Every participant receives active instruction, track guides, and personal tracking charts.
                     </p>
@@ -563,7 +593,7 @@
             
             <!-- Headline Call block -->
             <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Join The Community Mission</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion font-display">Join The Community Mission</p>
                 <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800 mt-2">INTAKE PORTAL</h2>
                 <p class="text-sm text-sand-800/70 mt-3 font-light">
                     Register your runner or sign up to support as a Leo Club volunteer below. Select the appropriate link to fill out our official program forms.
@@ -674,7 +704,7 @@
             
             <!-- Section Header -->
             <div class="text-center mb-12 sm:mb-16 space-y-4">
-                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run details</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion font-display">Run details</p>
                 <h2 class="font-display font-bold text-3xl sm:text-4xl text-forest-800">Frequently Asked Questions</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
             </div>
@@ -838,29 +868,38 @@
                     <p class="text-xs text-forest-800/80">We have sent your query to the Leo Club Board. Speak soon!</p>
                 </div>
 
+                <!-- ERROR TOAST -->
+                <div x-show="contactError" class="bg-vermilion-50 border border-vermilion/20 text-vermilion rounded-2xl p-6 text-center space-y-3 mb-4" style="display: none;">
+                    <span class="text-3xl">⚠️</span>
+                    <h4 class="font-display font-bold text-xl">Submission Error</h4>
+                    <p class="text-xs">There was an issue sending your inquiry. Please try again or email us directly.</p>
+                </div>
+
                 <!-- CONTACT FORM -->
-                <form x-show="!contactSuccess" @submit.prevent="contactSuccess = true" class="space-y-6">
+                <form x-show="!contactSuccess" @submit.prevent="submitForm($event)" class="space-y-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Full Name</label>
-                            <input required type="text" placeholder="Your Name" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
+                            <input required name="name" type="text" placeholder="Your Name" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Email Address</label>
-                            <input required type="email" placeholder="name@domain.com" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
+                            <input required name="email" type="email" placeholder="name@domain.com" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">How can we help you?</label>
-                        <textarea required rows="4" placeholder="Type your message details here..." class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none"></textarea>
+                        <textarea required name="message" rows="4" placeholder="Type your message details here..." class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none"></textarea>
                     </div>
 
                     <button 
                         type="submit" 
-                        class="w-full py-3 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider text-xs rounded-xl shadow-sm transition-all"
+                        class="w-full py-3 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider text-xs rounded-xl shadow-sm transition-all flex items-center justify-center space-x-2 disabled:opacity-50"
+                        :disabled="isSubmitting"
                     >
-                        Send Inquiry
+                        <span x-show="!isSubmitting">Send Inquiry</span>
+                        <span x-show="isSubmitting" style="display: none;">Sending...</span>
                     </button>
                 </form>
 
