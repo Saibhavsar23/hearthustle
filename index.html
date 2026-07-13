@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart Hustle — Youth Running Series | Green Brook Leo Club</title>
     
+    <!-- Runner Emoji Tab Icon (Favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>🏃</text></svg>">
+    
     <!-- Google Fonts: Space Grotesk (Athletic, Structural) & Plus Jakarta Sans (Clean, Modern) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +16,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Alpine.js (for high-end state management and seamless client-side interactions) -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Custom Tailwind Configuration -->
@@ -57,7 +60,6 @@
     </script>
 
     <style>
-        /* Smooth Custom Transitions and Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -75,11 +77,7 @@
 </head>
 <body 
     x-data="{ 
-        activeTab: 'register', 
-        registeredSuccess: false, 
-        volunteerSuccess: false,
         contactSuccess: false,
-        spotsRemaining: 42,
         faqActive: null
     }" 
     class="bg-sand-50 text-sand-800 font-sans antialiased selection:bg-vermilion selection:text-white"
@@ -105,7 +103,7 @@
             <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide uppercase">
                 <a href="#about" class="text-sand-800/70 hover:text-forest-800 transition-colors">Overview</a>
                 <a href="#schedule" class="text-sand-800/70 hover:text-forest-800 transition-colors">Schedule</a>
-                <a href="#portal" class="text-sand-800/70 hover:text-forest-800 transition-colors">Portal</a>
+                <a href="#portal" class="text-sand-800/70 hover:text-forest-800 transition-colors">Register</a>
                 <a href="#faq" class="text-sand-800/70 hover:text-forest-800 transition-colors">FAQs</a>
                 <a href="#contact" class="text-sand-800/70 hover:text-forest-800 transition-colors">Contact</a>
             </nav>
@@ -114,14 +112,12 @@
             <div class="flex items-center space-x-4">
                 <a 
                     href="#portal" 
-                    @click="activeTab = 'register'"
                     class="relative hidden sm:inline-flex items-center justify-center px-6 py-3 border border-forest-800 text-sm font-semibold uppercase tracking-wider rounded-lg text-forest-800 hover:text-white hover:bg-forest-800 transition-all duration-300 overflow-hidden"
                 >
                     Register Child
                 </a>
                 <a 
                     href="#portal" 
-                    @click="activeTab = 'volunteer'"
                     class="inline-flex items-center justify-center px-6 py-3 bg-vermilion hover:bg-vermilion-600 text-white text-sm font-semibold uppercase tracking-wider rounded-lg transition-all shadow-md shadow-vermilion/10 hover:shadow-lg hover:shadow-vermilion/20"
                 >
                     Volunteer Info
@@ -154,7 +150,7 @@
                 <!-- Athletics Badge -->
                 <div class="inline-flex items-center space-x-2 bg-forest-800 text-white rounded-full pl-2 pr-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-vermilion animate-pulse-slow"></span>
-                    <span>Athletic Safety & Cardiovascular Wellness</span>
+                    <span>Supporting the American Heart Association</span>
                 </div>
 
                 <h1 class="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-none text-forest-800 tracking-tight">
@@ -163,40 +159,19 @@
                 </h1>
 
                 <p class="text-lg lg:text-xl text-sand-800/80 max-w-2xl font-light leading-relaxed">
-                    A high-impact, 6-week youth wellness program hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at Arthur Lewis Park. Merging physical safety training, hydration science, and athletic development into an accessible series for neighborhood children.
+                    A high-impact, 6-week youth running series hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at Arthur Lewis Park. Merging physical fitness and athletic development into an accessible series for neighborhood children aged <strong class="font-semibold text-forest-800">3–11</strong>. All proceeds are directly donated to the <strong class="font-semibold text-vermilion">American Heart Association</strong>.
                 </p>
-
-                <!-- Live-Action Spot Counters -->
-                <div class="flex flex-wrap items-center gap-6 pt-4">
-                    <div class="bg-white/80 border border-sand-200 backdrop-blur-md rounded-xl p-4 flex items-center space-x-4">
-                        <span class="text-3xl">🏃‍♂️</span>
-                        <div>
-                            <p class="text-xs uppercase font-bold tracking-wider text-sand-800/50">Limited Capacity</p>
-                            <p class="text-xl font-display font-semibold text-forest-800">Only <span class="text-vermilion font-bold" x-text="spotsRemaining"></span> Spots Left</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white/80 border border-sand-200 backdrop-blur-md rounded-xl p-4 flex items-center space-x-4">
-                        <span class="text-3xl">🛡️</span>
-                        <div>
-                            <p class="text-xs uppercase font-bold tracking-wider text-sand-800/50">Active Safety</p>
-                            <p class="text-lg font-display font-semibold text-forest-800">1:3 Mentor Ratio</p>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Primary CTAs -->
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
                     <a 
                         href="#portal" 
-                        @click="activeTab = 'register'"
                         class="px-8 py-4 bg-forest-800 hover:bg-forest-900 text-white font-semibold text-base uppercase tracking-wider rounded-xl shadow-lg shadow-forest-800/10 hover:shadow-xl hover:shadow-forest-800/20 transition-all duration-300 text-center"
                     >
-                        Register a Participant
+                        Register a Participant ($30)
                     </a>
                     <a 
                         href="#portal" 
-                        @click="activeTab = 'volunteer'"
                         class="px-8 py-4 bg-white hover:bg-sand-100 border-2 border-forest-800/20 hover:border-forest-800/60 text-forest-800 font-semibold text-base uppercase tracking-wider rounded-xl transition-all duration-300 text-center"
                     >
                         Become a Volunteer
@@ -215,7 +190,7 @@
                         <div class="flex justify-between items-start border-b border-sand-200 pb-4">
                             <div>
                                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Program Schedule</p>
-                                <h3 class="text-2xl font-display font-bold text-forest-800 mt-1">Saturdays / Sundays</h3>
+                                <h3 class="text-2xl font-display font-bold text-forest-800 mt-1">Sundays Only</h3>
                             </div>
                             <span class="text-3xl">👟</span>
                         </div>
@@ -234,15 +209,15 @@
                                 <span class="bg-forest-800/10 text-forest-800 px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">TIME</span>
                                 <div>
                                     <h4 class="font-bold text-sand-800">10:30 AM Sharp</h4>
-                                    <p class="text-xs text-sand-800/60">Includes hydration warm-up & athletic safety check</p>
+                                    <p class="text-xs text-sand-800/60">Includes warm-up and structured running meets</p>
                                 </div>
                             </div>
 
                             <div class="flex items-start space-x-4">
-                                <span class="bg-sand-100 text-sand-800/70 px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">DURATION</span>
+                                <span class="bg-sand-100 text-sand-800/70 px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">COST</span>
                                 <div>
-                                    <h4 class="font-bold text-sand-800">6 Weeks of Hustle</h4>
-                                    <p class="text-xs text-sand-800/60">Ending in our community championship run</p>
+                                    <h4 class="font-bold text-sand-800">$30 Registration Fee</h4>
+                                    <p class="text-xs text-sand-800/60">Proceeds go to the American Heart Association</p>
                                 </div>
                             </div>
                         </div>
@@ -265,11 +240,11 @@
             
             <!-- Section Header -->
             <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Building Active Habits Safely</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Building Active Habits Together</p>
                 <h2 class="font-display font-bold text-4xl sm:text-5xl text-forest-800">OUR PILLARS OF DEVELOPMENT</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
                 <p class="text-sand-800/75 font-light leading-relaxed">
-                    Designed by community leaders, the Heart Hustle is more than a standard race series. We balance athletic skill improvement with hydration awareness and cardiac wellness templates.
+                    The Heart Hustle merges athletic skill improvement with community support. We welcome children of all physical backgrounds to learn athletic focus while supporting heart research.
                 </p>
             </div>
 
@@ -282,13 +257,13 @@
                         <div class="w-12 h-12 bg-forest-800 text-white rounded-xl flex items-center justify-center font-display font-bold text-lg">
                             01
                         </div>
-                        <h3 class="font-display font-bold text-2xl text-forest-800">Athletic Skill Progression</h3>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Athletic Progression</h3>
                         <p class="text-sm text-sand-800/70 leading-relaxed">
-                            Developing running form, endurance, and pacing logic over six structured sessions. Perfect for both absolute beginners and competitive youngsters.
+                            Developing running form, endurance, and pacing logic over six structured sessions. Perfect for both absolute beginners and energetic runners.
                         </p>
                     </div>
                     <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-vermilion font-semibold text-xs uppercase tracking-wider">
-                        <span>Cardiovascular Focus</span>
+                        <span>Ages 3-11</span>
                         <span>•</span>
                         <span>Core Endurance</span>
                     </div>
@@ -300,15 +275,15 @@
                         <div class="w-12 h-12 bg-vermilion text-white rounded-xl flex items-center justify-center font-display font-bold text-lg animate-pulse-slow">
                             02
                         </div>
-                        <h3 class="font-display font-bold text-2xl text-forest-800">Youth Hydration & Safety</h3>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Charitable Giving</h3>
                         <p class="text-sm text-sand-800/70 leading-relaxed">
-                            Every participant learns the science of proper electrolyte intake, warming up securely, and listening to their heart rates during extreme movement cycles.
+                            Each $30 ticket is designed to support a greater purpose. All proceeds go straight to the American Heart Association to fuel key research programs.
                         </p>
                     </div>
                     <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-forest-800 font-semibold text-xs uppercase tracking-wider">
-                        <span>Hydration Gear Ordered</span>
+                        <span>$30 Fee</span>
                         <span>•</span>
-                        <span>Safe Running Routes</span>
+                        <span>Proceeds to AHA</span>
                     </div>
                 </div>
 
@@ -318,15 +293,15 @@
                         <div class="w-12 h-12 bg-sand-200 text-sand-800 rounded-xl flex items-center justify-center font-display font-bold text-lg">
                             03
                         </div>
-                        <h3 class="font-display font-bold text-2xl text-forest-800">Mentorship and Leadership</h3>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Mentorship & Service</h3>
                         <p class="text-sm text-sand-800/70 leading-relaxed">
-                            Mentored actively by dedicated high school & collegiate athletes of the Green Brook Leo Club. Developing leadership pathways that bridge generation lines.
+                            Led actively by dedicated high school & collegiate members of the Green Brook Leo Club. Creating helpful pathways that connect our township.
                         </p>
                     </div>
                     <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-vermilion font-semibold text-xs uppercase tracking-wider">
                         <span>Lions International</span>
                         <span>•</span>
-                        <span>Community Service</span>
+                        <span>Community Support</span>
                     </div>
                 </div>
 
@@ -346,7 +321,7 @@
                     <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run Architecture</p>
                     <h2 class="font-display font-bold text-4xl text-forest-800 leading-tight">6 SESSIONS.<br class="hidden lg:inline" />ONE CHAMPIONSHIP.</h2>
                     <p class="text-sm text-sand-800/70 font-light leading-relaxed">
-                        All programs operate on weekends to keep scheduling stress-free. Every participant receives active hydration, security checkpoints, and personal stats tracking.
+                        All programs operate on Sundays to keep scheduling stress-free. Every participant receives active instruction, track guides, and personal tracking charts.
                     </p>
 
                     <!-- Route Highlight Card -->
@@ -359,7 +334,7 @@
                             </div>
                         </div>
                         <p class="text-xs text-sand-800/70">
-                            Our running routes are pre-screened for vehicle safety, even ground, and dense foliage to optimize cardiovascular health safety.
+                            A wonderful community green space, perfect for young runners. 
                         </p>
                         <a 
                             href="https://maps.google.com/?q=Arthur+Lewis+Park+Green+Brook+NJ" 
@@ -372,7 +347,7 @@
                     </div>
                 </div>
 
-                <!-- Right Hand Side: Weekly Run Log (Slide 5 Dates) -->
+                <!-- Right Hand Side: Weekly Run Log -->
                 <div class="lg:col-span-8 space-y-6">
                     
                     <!-- Session 1 Card -->
@@ -380,7 +355,7 @@
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-vermilion text-white font-display font-bold flex items-center justify-center text-lg shadow-md shadow-vermilion/10">01</span>
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wide text-vermilion">Kickoff Meet & Form Testing</p>
+                                <p class="text-xs font-bold uppercase tracking-wide text-vermilion">Run Meet Series Intro</p>
                                 <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 6th</h4>
                             </div>
                         </div>
@@ -394,7 +369,7 @@
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">02</span>
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Hydration Science Basics</p>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
                                 <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 13th</h4>
                             </div>
                         </div>
@@ -408,7 +383,7 @@
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">03</span>
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Pacing Strategies</p>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
                                 <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 20th</h4>
                             </div>
                         </div>
@@ -422,7 +397,7 @@
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">04</span>
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Endurance Playbook</p>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
                                 <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 27th</h4>
                             </div>
                         </div>
@@ -436,7 +411,7 @@
                         <div class="flex items-center space-x-4">
                             <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">05</span>
                             <div>
-                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Interval Running Workouts</p>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Weekly Run Progress</p>
                                 <h4 class="font-display font-bold text-xl text-forest-800">Sunday, October 4th</h4>
                             </div>
                         </div>
@@ -466,202 +441,111 @@
         </div>
     </section>
 
-    <!-- Interactive Dual Portal (Register & Volunteer Intake) -->
+    <!-- Interactive Dual Portal (Registration & Volunteer Link Cards) -->
     <section id="portal" class="py-24 bg-white relative overflow-hidden">
         
-        <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
             
             <!-- Headline Call block -->
-            <div class="text-center max-w-2xl mx-auto mb-12">
+            <div class="text-center max-w-2xl mx-auto mb-16">
                 <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Join The Community Mission</p>
                 <h2 class="font-display font-bold text-4xl text-forest-800 mt-2">INTAKE PORTAL</h2>
                 <p class="text-sm text-sand-800/70 mt-3 font-light">
-                    Register your runner or apply to become a Leo Club volunteer below. Toggle the tab to change form structures dynamically.
+                    Register your runner or sign up to support as a Leo Club volunteer below. Select the appropriate link to fill out our official program forms.
                 </p>
             </div>
 
-            <!-- Double Toggle Tabs -->
-            <div class="flex items-center justify-center space-x-4 mb-8">
-                <button 
-                    @click="activeTab = 'register'"
-                    :class="activeTab === 'register' ? 'bg-forest-800 text-white border-forest-800 shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-sand-800/70 border-sand-200'"
-                    class="px-8 py-3.5 border font-display font-semibold uppercase tracking-wider text-sm rounded-xl transition-all duration-300 focus:outline-none"
-                >
-                    🏃‍♂️ Kid Participant Registration
-                </button>
-                <button 
-                    @click="activeTab = 'volunteer'"
-                    :class="activeTab === 'volunteer' ? 'bg-vermilion text-white border-vermilion shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-sand-800/70 border-sand-200'"
-                    class="px-8 py-3.5 border font-display font-semibold uppercase tracking-wider text-sm rounded-xl transition-all duration-300 focus:outline-none"
-                >
-                    🦁 Become a Volunteer
-                </button>
-            </div>
-
-            <!-- Form Wrapper Frame -->
-            <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-12 shadow-xl shadow-sand-800/5 relative overflow-hidden">
+            <!-- Double Card Grid (Replacing Forms with Direct Google Form Link Buttons) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                 
-                <!-- BACKGROUND DECORATIONS -->
-                <div class="absolute -left-16 -top-16 w-32 h-32 rounded-full bg-forest-800/5 pointer-events-none"></div>
-                <div class="absolute -right-16 -bottom-16 w-32 h-32 rounded-full bg-vermilion/5 pointer-events-none"></div>
-
-                <!-- 1. KID REGISTRATION PORTAL -->
-                <div x-show="activeTab === 'register'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" class="space-y-6">
+                <!-- 1. KID REGISTRATION INFO CARD -->
+                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute -left-16 -top-16 w-32 h-32 rounded-full bg-forest-800/5 pointer-events-none"></div>
                     
-                    <!-- SUCCESS STATE -->
-                    <div x-show="registeredSuccess" class="bg-forest-50 border border-forest-800/20 text-forest-800 rounded-2xl p-8 text-center space-y-4">
-                        <span class="text-5xl">🎉</span>
-                        <h3 class="font-display font-bold text-2xl">Registration Locked In!</h3>
-                        <p class="text-sm max-w-md mx-auto text-forest-800/80 leading-relaxed">
-                            Thank you for signing up your child for the Fall 2026 Heart Hustle Series! We have dispatched a confirmation package and health questionnaire to your email.
+                    <div class="space-y-6 mb-8 relative z-10">
+                        <div class="flex items-center justify-between border-b border-sand-200 pb-4">
+                            <div>
+                                <span class="bg-forest-800 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">RUNNERS</span>
+                                <h3 class="font-display font-bold text-2xl text-forest-800 mt-2">Kid Registration</h3>
+                            </div>
+                            <span class="text-4xl">🏃‍♂️</span>
+                        </div>
+                        
+                        <p class="text-sm text-sand-800/80 leading-relaxed">
+                            Join us for our Fall program! This running series is optimized specifically for neighborhood children aged <strong class="font-bold text-forest-800">3 to 11</strong>. 
                         </p>
-                        <button 
-                            @click="registeredSuccess = false"
-                            class="px-6 py-2 border border-forest-800 text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-forest-800 hover:text-white transition-colors"
-                        >
-                            Register another child
-                        </button>
+
+                        <div class="space-y-3 bg-white/80 p-5 rounded-2xl border border-sand-200/60">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-sand-800/60">Ages Eligible</span>
+                                <span class="font-semibold text-forest-800">3 – 11 Years Old</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm border-t border-sand-200/40 pt-2">
+                                <span class="text-sand-800/60">Registration Fee</span>
+                                <span class="font-bold text-vermilion">$30 per participant</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs border-t border-sand-200/40 pt-2 text-forest-800/70 font-semibold italic">
+                                <span>❤️ 100% of proceeds support the American Heart Association</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- DYNAMIC FORM -->
-                    <form x-show="!registeredSuccess" @submit.prevent="registeredSuccess = true; spotsRemaining--" class="space-y-6">
-                        <div class="border-b border-sand-200 pb-4">
-                            <h3 class="font-display font-semibold text-lg text-forest-800">Participant & Guardian Details</h3>
-                            <p class="text-xs text-sand-800/50 mt-1">Please provide accurate athletic safety data for your runner.</p>
-                        </div>
-
-                        <!-- Form Input Row 1 -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Child's Full Name</label>
-                                <input required type="text" placeholder="e.g. Liam Smith" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                            </div>
-                            
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Child's Age (Ages 5-13)</label>
-                                <select required class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                                    <option value="">Select Age</option>
-                                    <option>5-6 Years Old</option>
-                                    <option>7-8 Years Old</option>
-                                    <option>9-10 Years Old</option>
-                                    <option>11-13 Years Old</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Form Input Row 2 -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Parent / Guardian Name</label>
-                                <input required type="text" placeholder="e.g. Jessica Smith" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                            </div>
-
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Contact Email</label>
-                                <input required type="email" placeholder="e.g. jessica@domain.com" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                            </div>
-                        </div>
-
-                        <!-- Athletic Safety Confirmation Toggle -->
-                        <div class="bg-white border border-sand-200 rounded-xl p-4 flex items-start space-x-3">
-                            <input required type="checkbox" id="healthSafety" class="mt-1 w-4 h-4 text-forest-800 rounded border-sand-200 focus:ring-forest-800 focus:ring-opacity-50">
-                            <label for="healthSafety" class="text-xs text-sand-800/70 leading-relaxed cursor-pointer select-none">
-                                I confirm my child is healthy and ready to join active outdoor running programs. I consent to medical support checking athletic vital signs if necessary.
-                            </label>
-                        </div>
-
-                        <!-- Submit Action Button -->
-                        <div class="pt-4">
-                            <button 
-                                type="submit" 
-                                class="w-full py-4 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
-                            >
-                                <span>Complete Run Series Registration</span>
-                                <span>&rarr;</span>
-                            </button>
-                        </div>
-                    </form>
+                    <!-- Submit Link Button (Updated later with custom google form url) -->
+                    <div class="relative z-10">
+                        <a 
+                            href="https://docs.google.com/forms/d/e/1FAIpQLSfbcNSVp7M74tCqhweHv1fFyboS2uv_iqoKC970F4gut0ZNOw/viewform?usp=header" 
+                            target="_blank"
+                            class="w-full py-4 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
+                        >
+                            <span>Open Registration Form</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- 2. VOLUNTEER REGISTRATION PORTAL -->
-                <div x-show="activeTab === 'volunteer'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" class="space-y-6">
-                    
-                    <!-- SUCCESS STATE -->
-                    <div x-show="volunteerSuccess" class="bg-vermilion-50 border border-vermilion/20 text-vermilion-700 rounded-2xl p-8 text-center space-y-4">
-                        <span class="text-5xl">🦁</span>
-                        <h3 class="font-display font-bold text-2xl">Application Received!</h3>
-                        <p class="text-sm max-w-md mx-auto text-vermilion-700/80 leading-relaxed">
-                            Thank you for stepping up, Leo! We are reviewing your sign-up details. Sai or Kayla will contact you shortly about shift schedules and route setups.
+                <!-- 2. VOLUNTEER REGISTRATION INFO CARD -->
+                <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-10 shadow-xl shadow-sand-800/5 relative overflow-hidden flex flex-col justify-between">
+                    <div class="absolute -right-16 -bottom-16 w-32 h-32 rounded-full bg-vermilion/5 pointer-events-none"></div>
+
+                    <div class="space-y-6 mb-8 relative z-10">
+                        <div class="flex items-center justify-between border-b border-sand-200 pb-4">
+                            <div>
+                                <span class="bg-vermilion text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">LEO CLUB</span>
+                                <h3 class="font-display font-bold text-2xl text-forest-800 mt-2">Become a Volunteer</h3>
+                            </div>
+                            <span class="text-4xl">🦁</span>
+                        </div>
+
+                        <p class="text-sm text-sand-800/80 leading-relaxed">
+                            Support your local neighborhood as an event helper! We are looking for youth and community members to assist with check-ins, water stations, and running paths.
                         </p>
-                        <button 
-                            @click="volunteerSuccess = false"
-                            class="px-6 py-2 border border-vermilion text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-vermilion hover:text-white transition-colors"
-                        >
-                            Sign up another helper
-                        </button>
+
+                        <div class="space-y-3 bg-white/80 p-5 rounded-2xl border border-sand-200/60">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-sand-800/60">Time Commitment</span>
+                                <span class="font-semibold text-forest-800">Sundays (Fall '26)</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm border-t border-sand-200/40 pt-2">
+                                <span class="text-sand-800/60">Primary Duties</span>
+                                <span class="font-semibold text-forest-800">Check-in, Hydration, Direction</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs border-t border-sand-200/40 pt-2 text-vermilion/80 font-semibold italic">
+                                <span>🤝 Gain community service hours with the Leos</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- DYNAMIC FORM -->
-                    <form x-show="!volunteerSuccess" @submit.prevent="volunteerSuccess = true" class="space-y-6">
-                        <div class="border-b border-sand-200 pb-4">
-                            <h3 class="font-display font-semibold text-lg text-vermilion">Join as a Leo Club Volunteer</h3>
-                            <p class="text-xs text-sand-800/50 mt-1">Help our community kids stay active, safe, and happy.</p>
-                        </div>
-
-                        <!-- Form Input Row 1 -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Full Name</label>
-                                <input required type="text" placeholder="e.g. Kayla Roberts" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                            </div>
-                            
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Phone Number (SMS Contact)</label>
-                                <input required type="tel" placeholder="e.g. (908) 555-0123" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                            </div>
-                        </div>
-
-                        <!-- Form Input Row 2 -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Age Group</label>
-                                <select required class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                                    <option value="">Select Age Group</option>
-                                    <option>Under 18 (Youth Leo)</option>
-                                    <option>18+ (Adult Supervisor)</option>
-                                    <option>Lions Club Senior Advisor</option>
-                                </select>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Primary Shift Choice</label>
-                                <select required class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
-                                    <option value="">Select Preference</option>
-                                    <option>Route Running Pacer</option>
-                                    <option>Hydration Station Setup</option>
-                                    <option>Safety Check & First-Aid</option>
-                                    <option>Check-in Desk & Records</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Volunteer Pitch Box -->
-                        <div class="space-y-2">
-                            <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Why do you want to help out?</label>
-                            <textarea rows="3" placeholder="Tell us briefly about any experience or just your motivation!" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors"></textarea>
-                        </div>
-
-                        <!-- Submit Action Button -->
-                        <div class="pt-4">
-                            <button 
-                                type="submit" 
-                                class="w-full py-4 bg-vermilion hover:bg-vermilion-600 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
-                            >
-                                <span>Submit Volunteer Application</span>
-                                <span>&rarr;</span>
-                            </button>
-                        </div>
-                    </form>
+                    <!-- Submit Link Button (Updated later with custom google form url) -->
+                    <div class="relative z-10">
+                        <a 
+                            href="https://docs.google.com/forms/d/e/1FAIpQLSfbcNSVp7M74tCqhweHv1fFyboS2uv_iqoKC970F4gut0ZNOw/viewform?usp=header" 
+                            target="_blank"
+                            class="w-full py-4 bg-vermilion hover:bg-vermilion-600 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
+                        >
+                            <span>Open Volunteer Form</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -675,7 +559,7 @@
             
             <!-- Section Header -->
             <div class="text-center mb-16 space-y-4">
-                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run safety details</p>
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run details</p>
                 <h2 class="font-display font-bold text-4xl text-forest-800">Frequently Asked Questions</h2>
                 <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
             </div>
@@ -704,7 +588,7 @@
                         x-transition:enter-end="opacity-100 max-h-screen"
                         class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
-                        Our program is intentionally optimized for children aged **5 to 13**. The weekly coaching runs are split into three tiered groups based on age and basic running endurance to keep programs fair, exciting, and highly secure.
+                        Our program is specifically designed for children aged **3 to 11**. Runners will be split into age-appropriate pacing groups during weekly meets.
                     </div>
                 </div>
 
@@ -714,7 +598,7 @@
                         @click="faqActive === 2 ? faqActive = null : faqActive = 2"
                         class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">What safety measures are in place?</span>
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">What should runners wear and bring?</span>
                         <span 
                             class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
                             :class="faqActive === 2 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
@@ -729,7 +613,7 @@
                         x-transition:enter-end="opacity-100 max-h-screen"
                         class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
-                        Safety is our number one priority. Our running pathways in Arthur Lewis Park are fully cordoned off from vehicles. We have designated spotters every 100 meters, mandatory high-visibility safety jerseys for children, dynamic pacing guides, and active checking stations.
+                        Please ensure your young runner arrives in comfortable athletic clothing and sneakers. We strongly recommend bringing a water bottle labeled with your child's name for hydration between laps.
                     </div>
                 </div>
 
@@ -739,7 +623,7 @@
                         @click="faqActive === 3 ? faqActive = null : faqActive = 3"
                         class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
                     >
-                        <span class="font-display font-bold text-forest-800 sm:text-lg">Is there any fee or entry cost?</span>
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">What is the entry cost and where does it go?</span>
                         <span 
                             class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
                             :class="faqActive === 3 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
@@ -754,7 +638,7 @@
                         x-transition:enter-end="opacity-100 max-h-screen"
                         class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
-                        No, the **Heart Hustle Series** is completely free! The program is entirely sponsored and coordinated by the **Green Brook Leo Club** as part of our youth leadership initiatives.
+                        Registration is **$30 per participant**. Every dollar of profit from this program goes directly to the **American Heart Association** to support cardiovascular health research and local public health education.
                     </div>
                 </div>
 
@@ -779,7 +663,7 @@
                         x-transition:enter-end="opacity-100 max-h-screen"
                         class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
                     >
-                        In the event of heavy rain or hazardous heat waves, we send out an SMS and email notification exactly 2 hours prior to start time. Weather make-ups will automatically roll to scheduled slots during the following weekend.
+                        In the event of heavy rain or inclement weather, we will send out an email notification directly to all registered parents at least 2 hours prior to start time. Weather make-ups will automatically roll to scheduled slots during the following Sunday.
                     </div>
                 </div>
 
@@ -863,7 +747,7 @@
                         <li><a href="#about" class="hover:text-vermilion transition-colors">About Series</a></li>
                         <li><a href="#schedule" class="hover:text-vermilion transition-colors">Program Schedule</a></li>
                         <li><a href="#portal" class="hover:text-vermilion transition-colors">Register</a></li>
-                        <li><a href="#faq" class="hover:text-vermilion transition-colors">Safety FAQs</a></li>
+                        <li><a href="#faq" class="hover:text-vermilion transition-colors">FAQs</a></li>
                     </ul>
                 </div>
 
@@ -872,7 +756,7 @@
                     <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion">Details</h4>
                     <p>📍 Location: Arthur Lewis Park, Green Brook NJ</p>
                     <p>🕒 Running: Sundays at 10:30 AM</p>
-                    <p>📧 Email: gb.leoclub@gmail.com</p>
+                    <p>📧 Email: <a href="mailto:saibhavsar17@gmail.com" class="underline hover:text-vermilion">saibhavsar17@gmail.com</a></p>
                     <p class="italic text-white/50 pt-2 font-display text-xs">Leos Lead • Leos Serve</p>
                 </div>
 
