@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Hustle — Youth Running Series | Green Brook Leo Club</title>
+    
+    <!-- Google Fonts: Space Grotesk (Athletic, Structural) & Plus Jakarta Sans (Clean, Modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js (for high-end state management and seamless client-side interactions) -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                    },
+                    colors: {
+                        forest: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            800: '#14532d', // Custom Forest Green
+                            900: '#0f3f22',
+                        },
+                        sand: {
+                            50: '#fdfbf9',
+                            100: '#f5efe6', // Warm Sand Base
+                            200: '#eae5dc', // Border / Muted Beige
+                            300: '#d5cbba',
+                            800: '#403930',
+                        },
+                        vermilion: {
+                            DEFAULT: '#e04f2d', // Energetic active athletic Vermilion
+                            50: '#fff5f2',
+                            100: '#ffe6df',
+                            600: '#ca3e1e',
+                            700: '#ab2f15',
+                        }
+                    },
+                    animation: {
+                        'float-slow': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Custom Transitions and Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f5efe6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b4926c;
+        }
+    </style>
+</head>
+<body 
+    x-data="{ 
+        activeTab: 'register', 
+        registeredSuccess: false, 
+        volunteerSuccess: false,
+        contactSuccess: false,
+        spotsRemaining: 42,
+        faqActive: null
+    }" 
+    class="bg-sand-50 text-sand-800 font-sans antialiased selection:bg-vermilion selection:text-white"
+>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-sand-100/95 backdrop-blur-md border-b border-sand-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Identity -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <span class="w-10 h-10 rounded-lg bg-forest-800 flex items-center justify-center text-white font-display font-bold text-lg tracking-tight group-hover:bg-vermilion transition-colors duration-300">
+                    🦁
+                </span>
+                <div>
+                    <div class="font-display font-bold tracking-tight text-forest-800 text-lg leading-tight flex items-center gap-1.5">
+                        HEART HUSTLE <span class="text-xs text-vermilion font-sans font-semibold border border-vermilion/30 px-1.5 py-0.2 rounded-full uppercase tracking-wider">FALL '26</span>
+                    </div>
+                    <p class="text-xs font-medium text-sand-800/60 uppercase tracking-widest leading-none mt-1">Green Brook Leo Club</p>
+                </div>
+            </a>
+
+            <!-- Editorial Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide uppercase">
+                <a href="#about" class="text-sand-800/70 hover:text-forest-800 transition-colors">Overview</a>
+                <a href="#schedule" class="text-sand-800/70 hover:text-forest-800 transition-colors">Schedule</a>
+                <a href="#portal" class="text-sand-800/70 hover:text-forest-800 transition-colors">Portal</a>
+                <a href="#faq" class="text-sand-800/70 hover:text-forest-800 transition-colors">FAQs</a>
+                <a href="#contact" class="text-sand-800/70 hover:text-forest-800 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Dynamic CTA -->
+            <div class="flex items-center space-x-4">
+                <a 
+                    href="#portal" 
+                    @click="activeTab = 'register'"
+                    class="relative hidden sm:inline-flex items-center justify-center px-6 py-3 border border-forest-800 text-sm font-semibold uppercase tracking-wider rounded-lg text-forest-800 hover:text-white hover:bg-forest-800 transition-all duration-300 overflow-hidden"
+                >
+                    Register Child
+                </a>
+                <a 
+                    href="#portal" 
+                    @click="activeTab = 'volunteer'"
+                    class="inline-flex items-center justify-center px-6 py-3 bg-vermilion hover:bg-vermilion-600 text-white text-sm font-semibold uppercase tracking-wider rounded-lg transition-all shadow-md shadow-vermilion/10 hover:shadow-lg hover:shadow-vermilion/20"
+                >
+                    Volunteer Info
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero / Intro Poster Section -->
+    <section class="relative bg-sand-100 overflow-hidden py-16 lg:py-24 border-b border-sand-200">
+        <!-- Abstract Sport Grid Graphic Behind Background -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#14532d" stroke-width="1.5" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <!-- Big Sport Stripe Accent -->
+        <div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-vermilion/5 to-transparent skew-x-12 transform origin-top-right"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Side: Editorial Headers -->
+            <div class="lg:col-span-7 space-y-8">
+                <!-- Athletics Badge -->
+                <div class="inline-flex items-center space-x-2 bg-forest-800 text-white rounded-full pl-2 pr-4 py-1.5 text-xs font-semibold uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-vermilion animate-pulse-slow"></span>
+                    <span>Athletic Safety & Cardiovascular Wellness</span>
+                </div>
+
+                <h1 class="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-none text-forest-800 tracking-tight">
+                    THE PACESETTERS OF <br class="hidden sm:inline" />
+                    <span class="text-vermilion">GREEN BROOK.</span>
+                </h1>
+
+                <p class="text-lg lg:text-xl text-sand-800/80 max-w-2xl font-light leading-relaxed">
+                    A high-impact, 6-week youth wellness program hosted by the <strong class="font-semibold text-forest-800">Green Brook Leo Club</strong> at Arthur Lewis Park. Merging physical safety training, hydration science, and athletic development into an accessible series for neighborhood children.
+                </p>
+
+                <!-- Live-Action Spot Counters -->
+                <div class="flex flex-wrap items-center gap-6 pt-4">
+                    <div class="bg-white/80 border border-sand-200 backdrop-blur-md rounded-xl p-4 flex items-center space-x-4">
+                        <span class="text-3xl">🏃‍♂️</span>
+                        <div>
+                            <p class="text-xs uppercase font-bold tracking-wider text-sand-800/50">Limited Capacity</p>
+                            <p class="text-xl font-display font-semibold text-forest-800">Only <span class="text-vermilion font-bold" x-text="spotsRemaining"></span> Spots Left</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/80 border border-sand-200 backdrop-blur-md rounded-xl p-4 flex items-center space-x-4">
+                        <span class="text-3xl">🛡️</span>
+                        <div>
+                            <p class="text-xs uppercase font-bold tracking-wider text-sand-800/50">Active Safety</p>
+                            <p class="text-lg font-display font-semibold text-forest-800">1:3 Mentor Ratio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Primary CTAs -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                    <a 
+                        href="#portal" 
+                        @click="activeTab = 'register'"
+                        class="px-8 py-4 bg-forest-800 hover:bg-forest-900 text-white font-semibold text-base uppercase tracking-wider rounded-xl shadow-lg shadow-forest-800/10 hover:shadow-xl hover:shadow-forest-800/20 transition-all duration-300 text-center"
+                    >
+                        Register a Participant
+                    </a>
+                    <a 
+                        href="#portal" 
+                        @click="activeTab = 'volunteer'"
+                        class="px-8 py-4 bg-white hover:bg-sand-100 border-2 border-forest-800/20 hover:border-forest-800/60 text-forest-800 font-semibold text-base uppercase tracking-wider rounded-xl transition-all duration-300 text-center"
+                    >
+                        Become a Volunteer
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Side: Big Sport Editorial Graphic / Info Slate -->
+            <div class="lg:col-span-5 relative">
+                <!-- Graphic Frame -->
+                <div class="relative bg-white border border-sand-200 rounded-3xl p-8 shadow-xl shadow-sand-800/5 overflow-hidden">
+                    <!-- Subtle Sport Texture -->
+                    <div class="absolute -right-12 -bottom-12 w-64 h-64 rounded-full bg-vermilion/5 pointer-events-none"></div>
+
+                    <div class="space-y-6">
+                        <div class="flex justify-between items-start border-b border-sand-200 pb-4">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Program Schedule</p>
+                                <h3 class="text-2xl font-display font-bold text-forest-800 mt-1">Saturdays / Sundays</h3>
+                            </div>
+                            <span class="text-3xl">👟</span>
+                        </div>
+
+                        <!-- Brief Schedule Bullet Points -->
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-4">
+                                <span class="bg-vermilion/10 text-vermilion px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">LAUNCH</span>
+                                <div>
+                                    <h4 class="font-bold text-sand-800">September 6, 2026</h4>
+                                    <p class="text-xs text-sand-800/60">Weekly meets kick off at Arthur Lewis Park</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-4">
+                                <span class="bg-forest-800/10 text-forest-800 px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">TIME</span>
+                                <div>
+                                    <h4 class="font-bold text-sand-800">10:30 AM Sharp</h4>
+                                    <p class="text-xs text-sand-800/60">Includes hydration warm-up & athletic safety check</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start space-x-4">
+                                <span class="bg-sand-100 text-sand-800/70 px-2.5 py-1 rounded text-xs font-display font-semibold mt-0.5">DURATION</span>
+                                <div>
+                                    <h4 class="font-bold text-sand-800">6 Weeks of Hustle</h4>
+                                    <p class="text-xs text-sand-800/60">Ending in our community championship run</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Poster Footer Info -->
+                        <div class="bg-sand-100 rounded-2xl p-4 border border-sand-200/60 flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase text-sand-800/50">Green Brook Leo Club</span>
+                            <span class="text-xs font-bold text-vermilion uppercase tracking-wide">Serving NJ Youth Since 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Overview / Goals Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Building Active Habits Safely</p>
+                <h2 class="font-display font-bold text-4xl sm:text-5xl text-forest-800">OUR PILLARS OF DEVELOPMENT</h2>
+                <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
+                <p class="text-sand-800/75 font-light leading-relaxed">
+                    Designed by community leaders, the Heart Hustle is more than a standard race series. We balance athletic skill improvement with hydration awareness and cardiac wellness templates.
+                </p>
+            </div>
+
+            <!-- Feature Block - Custom Asymmetrical Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Pillar 1 -->
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-forest-800 text-white rounded-xl flex items-center justify-center font-display font-bold text-lg">
+                            01
+                        </div>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Athletic Skill Progression</h3>
+                        <p class="text-sm text-sand-800/70 leading-relaxed">
+                            Developing running form, endurance, and pacing logic over six structured sessions. Perfect for both absolute beginners and competitive youngsters.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-vermilion font-semibold text-xs uppercase tracking-wider">
+                        <span>Cardiovascular Focus</span>
+                        <span>•</span>
+                        <span>Core Endurance</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-vermilion text-white rounded-xl flex items-center justify-center font-display font-bold text-lg animate-pulse-slow">
+                            02
+                        </div>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Youth Hydration & Safety</h3>
+                        <p class="text-sm text-sand-800/70 leading-relaxed">
+                            Every participant learns the science of proper electrolyte intake, warming up securely, and listening to their heart rates during extreme movement cycles.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-forest-800 font-semibold text-xs uppercase tracking-wider">
+                        <span>Hydration Gear Ordered</span>
+                        <span>•</span>
+                        <span>Safe Running Routes</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-2xl p-8 hover:shadow-xl hover:shadow-sand-800/5 transition-all duration-300 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-sand-200 text-sand-800 rounded-xl flex items-center justify-center font-display font-bold text-lg">
+                            03
+                        </div>
+                        <h3 class="font-display font-bold text-2xl text-forest-800">Mentorship and Leadership</h3>
+                        <p class="text-sm text-sand-800/70 leading-relaxed">
+                            Mentored actively by dedicated high school & collegiate athletes of the Green Brook Leo Club. Developing leadership pathways that bridge generation lines.
+                        </p>
+                    </div>
+                    <div class="pt-6 border-t border-sand-200/60 mt-6 flex items-center space-x-2 text-vermilion font-semibold text-xs uppercase tracking-wider">
+                        <span>Lions International</span>
+                        <span>•</span>
+                        <span>Community Service</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-20 bg-sand-100 border-t border-b border-sand-200">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Hand Side: Copy Block & Route Map Concept -->
+                <div class="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
+                    <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run Architecture</p>
+                    <h2 class="font-display font-bold text-4xl text-forest-800 leading-tight">6 SESSIONS.<br class="hidden lg:inline" />ONE CHAMPIONSHIP.</h2>
+                    <p class="text-sm text-sand-800/70 font-light leading-relaxed">
+                        All programs operate on weekends to keep scheduling stress-free. Every participant receives active hydration, security checkpoints, and personal stats tracking.
+                    </p>
+
+                    <!-- Route Highlight Card -->
+                    <div class="bg-white border border-sand-200 p-6 rounded-2xl space-y-4 shadow-md shadow-sand-800/5">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🌳</span>
+                            <div>
+                                <h4 class="font-bold text-forest-800">Arthur Lewis Park</h4>
+                                <p class="text-xs text-sand-800/60">Green Brook Township, NJ</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-sand-800/70">
+                            Our running routes are pre-screened for vehicle safety, even ground, and dense foliage to optimize cardiovascular health safety.
+                        </p>
+                        <a 
+                            href="https://maps.google.com/?q=Arthur+Lewis+Park+Green+Brook+NJ" 
+                            target="_blank"
+                            class="inline-flex items-center space-x-1.5 text-xs font-bold text-vermilion uppercase hover:text-vermilion-700 transition-colors"
+                        >
+                            <span>Open in Apple/Google Maps</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Hand Side: Weekly Run Log (Slide 5 Dates) -->
+                <div class="lg:col-span-8 space-y-6">
+                    
+                    <!-- Session 1 Card -->
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-vermilion text-white font-display font-bold flex items-center justify-center text-lg shadow-md shadow-vermilion/10">01</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-vermilion">Kickoff Meet & Form Testing</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 6th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                            ⏱️ 10:30 AM Launch
+                        </div>
+                    </div>
+
+                    <!-- Session 2 Card -->
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">02</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Hydration Science Basics</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 13th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                            ⏱️ 10:30 AM Launch
+                        </div>
+                    </div>
+
+                    <!-- Session 3 Card -->
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">03</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Pacing Strategies</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 20th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                            ⏱️ 10:30 AM Launch
+                        </div>
+                    </div>
+
+                    <!-- Session 4 Card -->
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">04</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Endurance Playbook</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, September 27th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                            ⏱️ 10:30 AM Launch
+                        </div>
+                    </div>
+
+                    <!-- Session 5 Card -->
+                    <div class="bg-white border border-sand-200 hover:border-vermilion/40 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm shadow-sand-800/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-forest-800 text-white font-display font-bold flex items-center justify-center text-lg">05</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-forest-800">Interval Running Workouts</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, October 4th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-sand-50 px-4 py-2 rounded-lg border border-sand-200 text-xs font-medium text-sand-800/70">
+                            ⏱️ 10:30 AM Launch
+                        </div>
+                    </div>
+
+                    <!-- Session 6 Card -->
+                    <div class="bg-white border border-vermilion hover:border-vermilion-600 p-6 rounded-2xl transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-md shadow-vermilion/5">
+                        <div class="flex items-center space-x-4">
+                            <span class="w-12 h-12 rounded-xl bg-vermilion text-white font-display font-bold flex items-center justify-center text-lg shadow-md shadow-vermilion/10 animate-float-slow">🏁</span>
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wide text-vermilion">CHAMPIONSHIP HUSTLE RUN</p>
+                                <h4 class="font-display font-bold text-xl text-forest-800">Sunday, October 11th</h4>
+                            </div>
+                        </div>
+                        <div class="bg-vermilion text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider">
+                            🏆 Medals & Celebration
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive Dual Portal (Register & Volunteer Intake) -->
+    <section id="portal" class="py-24 bg-white relative overflow-hidden">
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            
+            <!-- Headline Call block -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Join The Community Mission</p>
+                <h2 class="font-display font-bold text-4xl text-forest-800 mt-2">INTAKE PORTAL</h2>
+                <p class="text-sm text-sand-800/70 mt-3 font-light">
+                    Register your runner or apply to become a Leo Club volunteer below. Toggle the tab to change form structures dynamically.
+                </p>
+            </div>
+
+            <!-- Double Toggle Tabs -->
+            <div class="flex items-center justify-center space-x-4 mb-8">
+                <button 
+                    @click="activeTab = 'register'"
+                    :class="activeTab === 'register' ? 'bg-forest-800 text-white border-forest-800 shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-sand-800/70 border-sand-200'"
+                    class="px-8 py-3.5 border font-display font-semibold uppercase tracking-wider text-sm rounded-xl transition-all duration-300 focus:outline-none"
+                >
+                    🏃‍♂️ Kid Participant Registration
+                </button>
+                <button 
+                    @click="activeTab = 'volunteer'"
+                    :class="activeTab === 'volunteer' ? 'bg-vermilion text-white border-vermilion shadow-md' : 'bg-sand-100 hover:bg-sand-200 text-sand-800/70 border-sand-200'"
+                    class="px-8 py-3.5 border font-display font-semibold uppercase tracking-wider text-sm rounded-xl transition-all duration-300 focus:outline-none"
+                >
+                    🦁 Become a Volunteer
+                </button>
+            </div>
+
+            <!-- Form Wrapper Frame -->
+            <div class="bg-sand-100 border border-sand-200 rounded-3xl p-8 sm:p-12 shadow-xl shadow-sand-800/5 relative overflow-hidden">
+                
+                <!-- BACKGROUND DECORATIONS -->
+                <div class="absolute -left-16 -top-16 w-32 h-32 rounded-full bg-forest-800/5 pointer-events-none"></div>
+                <div class="absolute -right-16 -bottom-16 w-32 h-32 rounded-full bg-vermilion/5 pointer-events-none"></div>
+
+                <!-- 1. KID REGISTRATION PORTAL -->
+                <div x-show="activeTab === 'register'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" class="space-y-6">
+                    
+                    <!-- SUCCESS STATE -->
+                    <div x-show="registeredSuccess" class="bg-forest-50 border border-forest-800/20 text-forest-800 rounded-2xl p-8 text-center space-y-4">
+                        <span class="text-5xl">🎉</span>
+                        <h3 class="font-display font-bold text-2xl">Registration Locked In!</h3>
+                        <p class="text-sm max-w-md mx-auto text-forest-800/80 leading-relaxed">
+                            Thank you for signing up your child for the Fall 2026 Heart Hustle Series! We have dispatched a confirmation package and health questionnaire to your email.
+                        </p>
+                        <button 
+                            @click="registeredSuccess = false"
+                            class="px-6 py-2 border border-forest-800 text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-forest-800 hover:text-white transition-colors"
+                        >
+                            Register another child
+                        </button>
+                    </div>
+
+                    <!-- DYNAMIC FORM -->
+                    <form x-show="!registeredSuccess" @submit.prevent="registeredSuccess = true; spotsRemaining--" class="space-y-6">
+                        <div class="border-b border-sand-200 pb-4">
+                            <h3 class="font-display font-semibold text-lg text-forest-800">Participant & Guardian Details</h3>
+                            <p class="text-xs text-sand-800/50 mt-1">Please provide accurate athletic safety data for your runner.</p>
+                        </div>
+
+                        <!-- Form Input Row 1 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Child's Full Name</label>
+                                <input required type="text" placeholder="e.g. Liam Smith" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Child's Age (Ages 5-13)</label>
+                                <select required class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                                    <option value="">Select Age</option>
+                                    <option>5-6 Years Old</option>
+                                    <option>7-8 Years Old</option>
+                                    <option>9-10 Years Old</option>
+                                    <option>11-13 Years Old</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Form Input Row 2 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Parent / Guardian Name</label>
+                                <input required type="text" placeholder="e.g. Jessica Smith" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Contact Email</label>
+                                <input required type="email" placeholder="e.g. jessica@domain.com" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <!-- Athletic Safety Confirmation Toggle -->
+                        <div class="bg-white border border-sand-200 rounded-xl p-4 flex items-start space-x-3">
+                            <input required type="checkbox" id="healthSafety" class="mt-1 w-4 h-4 text-forest-800 rounded border-sand-200 focus:ring-forest-800 focus:ring-opacity-50">
+                            <label for="healthSafety" class="text-xs text-sand-800/70 leading-relaxed cursor-pointer select-none">
+                                I confirm my child is healthy and ready to join active outdoor running programs. I consent to medical support checking athletic vital signs if necessary.
+                            </label>
+                        </div>
+
+                        <!-- Submit Action Button -->
+                        <div class="pt-4">
+                            <button 
+                                type="submit" 
+                                class="w-full py-4 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
+                            >
+                                <span>Complete Run Series Registration</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 2. VOLUNTEER REGISTRATION PORTAL -->
+                <div x-show="activeTab === 'volunteer'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" class="space-y-6">
+                    
+                    <!-- SUCCESS STATE -->
+                    <div x-show="volunteerSuccess" class="bg-vermilion-50 border border-vermilion/20 text-vermilion-700 rounded-2xl p-8 text-center space-y-4">
+                        <span class="text-5xl">🦁</span>
+                        <h3 class="font-display font-bold text-2xl">Application Received!</h3>
+                        <p class="text-sm max-w-md mx-auto text-vermilion-700/80 leading-relaxed">
+                            Thank you for stepping up, Leo! We are reviewing your sign-up details. Sai or Kayla will contact you shortly about shift schedules and route setups.
+                        </p>
+                        <button 
+                            @click="volunteerSuccess = false"
+                            class="px-6 py-2 border border-vermilion text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-vermilion hover:text-white transition-colors"
+                        >
+                            Sign up another helper
+                        </button>
+                    </div>
+
+                    <!-- DYNAMIC FORM -->
+                    <form x-show="!volunteerSuccess" @submit.prevent="volunteerSuccess = true" class="space-y-6">
+                        <div class="border-b border-sand-200 pb-4">
+                            <h3 class="font-display font-semibold text-lg text-vermilion">Join as a Leo Club Volunteer</h3>
+                            <p class="text-xs text-sand-800/50 mt-1">Help our community kids stay active, safe, and happy.</p>
+                        </div>
+
+                        <!-- Form Input Row 1 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Full Name</label>
+                                <input required type="text" placeholder="e.g. Kayla Roberts" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Phone Number (SMS Contact)</label>
+                                <input required type="tel" placeholder="e.g. (908) 555-0123" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <!-- Form Input Row 2 -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Age Group</label>
+                                <select required class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                                    <option value="">Select Age Group</option>
+                                    <option>Under 18 (Youth Leo)</option>
+                                    <option>18+ (Adult Supervisor)</option>
+                                    <option>Lions Club Senior Advisor</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Primary Shift Choice</label>
+                                <select required class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors">
+                                    <option value="">Select Preference</option>
+                                    <option>Route Running Pacer</option>
+                                    <option>Hydration Station Setup</option>
+                                    <option>Safety Check & First-Aid</option>
+                                    <option>Check-in Desk & Records</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Volunteer Pitch Box -->
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Why do you want to help out?</label>
+                            <textarea rows="3" placeholder="Tell us briefly about any experience or just your motivation!" class="w-full bg-white border border-sand-200 focus:border-vermilion rounded-lg p-3 text-sm focus:outline-none transition-colors"></textarea>
+                        </div>
+
+                        <!-- Submit Action Button -->
+                        <div class="pt-4">
+                            <button 
+                                type="submit" 
+                                class="w-full py-4 bg-vermilion hover:bg-vermilion-600 text-white font-display font-semibold uppercase tracking-wider rounded-xl shadow-md transition-all duration-300 flex items-center justify-center space-x-2"
+                            >
+                                <span>Submit Volunteer Application</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-sand-100 border-t border-b border-sand-200">
+        <div class="max-w-4xl mx-auto px-6">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16 space-y-4">
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion">Run safety details</p>
+                <h2 class="font-display font-bold text-4xl text-forest-800">Frequently Asked Questions</h2>
+                <div class="w-16 h-1 bg-vermilion mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Accordion Grid -->
+            <div class="space-y-4">
+                
+                <!-- FAQ Item 1 -->
+                <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button 
+                        @click="faqActive === 1 ? faqActive = null : faqActive = 1"
+                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                    >
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">What are the age limits for participants?</span>
+                        <span 
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            :class="faqActive === 1 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
+                        >
+                            ↓
+                        </span>
+                    </button>
+                    <div 
+                        x-show="faqActive === 1" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 max-h-0"
+                        x-transition:enter-end="opacity-100 max-h-screen"
+                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                    >
+                        Our program is intentionally optimized for children aged **5 to 13**. The weekly coaching runs are split into three tiered groups based on age and basic running endurance to keep programs fair, exciting, and highly secure.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button 
+                        @click="faqActive === 2 ? faqActive = null : faqActive = 2"
+                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                    >
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">What safety measures are in place?</span>
+                        <span 
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            :class="faqActive === 2 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
+                        >
+                            ↓
+                        </span>
+                    </button>
+                    <div 
+                        x-show="faqActive === 2" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 max-h-0"
+                        x-transition:enter-end="opacity-100 max-h-screen"
+                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                    >
+                        Safety is our number one priority. Our running pathways in Arthur Lewis Park are fully cordoned off from vehicles. We have designated spotters every 100 meters, mandatory high-visibility safety jerseys for children, dynamic pacing guides, and active checking stations.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button 
+                        @click="faqActive === 3 ? faqActive = null : faqActive = 3"
+                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                    >
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">Is there any fee or entry cost?</span>
+                        <span 
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            :class="faqActive === 3 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
+                        >
+                            ↓
+                        </span>
+                    </button>
+                    <div 
+                        x-show="faqActive === 3" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 max-h-0"
+                        x-transition:enter-end="opacity-100 max-h-screen"
+                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                    >
+                        No, the **Heart Hustle Series** is completely free! The program is entirely sponsored and coordinated by the **Green Brook Leo Club** as part of our youth leadership initiatives.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white border border-sand-200 rounded-2xl overflow-hidden transition-all duration-300">
+                    <button 
+                        @click="faqActive === 4 ? faqActive = null : faqActive = 4"
+                        class="w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none"
+                    >
+                        <span class="font-display font-bold text-forest-800 sm:text-lg">What happens during bad weather days?</span>
+                        <span 
+                            class="w-8 h-8 rounded-full bg-sand-100 flex items-center justify-center font-bold text-sm text-sand-800/70 transition-transform duration-300"
+                            :class="faqActive === 4 ? 'rotate-180 bg-vermilion/10 text-vermilion' : ''"
+                        >
+                            ↓
+                        </span>
+                    </button>
+                    <div 
+                        x-show="faqActive === 4" 
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 max-h-0"
+                        x-transition:enter-end="opacity-100 max-h-screen"
+                        class="px-6 pb-6 text-sm text-sand-800/70 leading-relaxed border-t border-sand-200/50 pt-4"
+                    >
+                        In the event of heavy rain or hazardous heat waves, we send out an SMS and email notification exactly 2 hours prior to start time. Weather make-ups will automatically roll to scheduled slots during the following weekend.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact / Inquiries Section -->
+    <section id="contact" class="py-20 bg-white relative">
+        <div class="max-w-4xl mx-auto px-6">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <p class="text-xs font-bold uppercase tracking-widest text-vermilion font-semibold">Still have questions?</p>
+                <h2 class="font-display font-bold text-3xl text-forest-800 mt-2">Get in Touch with our team</h2>
+                <p class="text-xs text-sand-800/50 mt-1">Sai Bhavsar (Vice President) or Kayla Roberts (Coordinator) will get back to you within 24 hours.</p>
+            </div>
+
+            <!-- Modern Form Box -->
+            <div class="bg-sand-50 border border-sand-200 rounded-3xl p-8 sm:p-12 shadow-lg shadow-sand-800/5">
+                
+                <!-- SUCCESS TOAST -->
+                <div x-show="contactSuccess" class="bg-forest-50 border border-forest-800/20 text-forest-800 rounded-2xl p-6 text-center space-y-3">
+                    <span class="text-3xl">📬</span>
+                    <h4 class="font-display font-bold text-xl">Inquiry Received</h4>
+                    <p class="text-xs text-forest-800/80">We have sent your query to the Leo Club Board. Speak soon!</p>
+                </div>
+
+                <!-- CONTACT FORM -->
+                <form x-show="!contactSuccess" @submit.prevent="contactSuccess = true" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Full Name</label>
+                            <input required type="text" placeholder="Your Name" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">Your Email Address</label>
+                            <input required type="email" placeholder="name@domain.com" class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold tracking-wider text-sand-800/60">How can we help you?</label>
+                        <textarea required rows="4" placeholder="Type your message details here..." class="w-full bg-white border border-sand-200 focus:border-forest-800 rounded-lg p-3 text-sm focus:outline-none"></textarea>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        class="w-full py-3 bg-forest-800 hover:bg-forest-900 text-white font-display font-semibold uppercase tracking-wider text-xs rounded-xl shadow-sm transition-all"
+                    >
+                        Send Inquiry
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-forest-800 text-white border-t-4 border-vermilion">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b border-white/10 pb-8 mb-8">
+                
+                <!-- Left Hand Side Brand Column -->
+                <div class="md:col-span-5 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="w-10 h-10 rounded-lg bg-vermilion text-white flex items-center justify-center font-bold text-lg">🦁</span>
+                        <h3 class="font-display font-bold tracking-tight text-xl">GREEN BROOK LEO CLUB</h3>
+                    </div>
+                    <p class="text-xs text-white/70 max-w-sm leading-relaxed">
+                        The Green Brook Leo Club coordinates community leadership, youth experience, and athletic development opportunities. Sponsored proudly by Lions Clubs International.
+                    </p>
+                </div>
+
+                <!-- Middle Column: Quick links -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion">Links</h4>
+                    <ul class="text-xs space-y-2 text-white/80">
+                        <li><a href="#about" class="hover:text-vermilion transition-colors">About Series</a></li>
+                        <li><a href="#schedule" class="hover:text-vermilion transition-colors">Program Schedule</a></li>
+                        <li><a href="#portal" class="hover:text-vermilion transition-colors">Register</a></li>
+                        <li><a href="#faq" class="hover:text-vermilion transition-colors">Safety FAQs</a></li>
+                    </ul>
+                </div>
+
+                <!-- Right Column: Coordinates -->
+                <div class="md:col-span-4 space-y-3 text-xs text-white/80">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-vermilion">Details</h4>
+                    <p>📍 Location: Arthur Lewis Park, Green Brook NJ</p>
+                    <p>🕒 Running: Sundays at 10:30 AM</p>
+                    <p>📧 Email: gb.leoclub@gmail.com</p>
+                    <p class="italic text-white/50 pt-2 font-display text-xs">Leos Lead • Leos Serve</p>
+                </div>
+
+            </div>
+
+            <!-- Lower Copywrite Section -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/50">
+                <p>&copy; 2026 Green Brook Leo Club. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-white transition-colors">Terms of Use</a>
+                    <span>•</span>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+</html>
